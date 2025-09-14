@@ -67,7 +67,6 @@
         border: 2px solid currentColor;
       }
 
-
       .hover-lift {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
@@ -92,7 +91,19 @@
         class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center"
       >
         <div class="flex items-center space-x-3 cursor-pointer">
-          <img src="logo.svg" alt="cocopcb logo" class="h-8 w-8 fill-current text-black dark:text-white" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 233 245"
+            class="h-8 w-8 text-black dark:text-white"
+          >
+            <defs id="defs1" />
+            <g id="g1">
+              <path
+                d="m 68.654988,238.17126 c -0.910244,-1.00581 -1.64406,-2.69331 -1.630703,-3.75 0.04097,-3.24127 27.691543,-100.53705 28.921414,-101.76757 0.834429,-0.83487 15.302151,-1.22267 52.353691,-1.40332 55.37242,-0.26997 55.90634,-0.22348 56.50719,4.92078 0.3549,3.03851 -26.27094,98.20974 -28.41849,101.57885 l -1.4342,2.25 h -52.32196 c -49.418667,0 -52.413788,-0.10147 -53.976942,-1.82874 z M 8,191 C 6.9,189.9 6,188.22987 6,187.2886 6,183.21704 20.445025,134.55497 22.163872,132.83613 23.85395,131.14605 26.12995,131 50.777494,131 c 29.992564,0 31.245608,0.25331 31.196712,6.3067 -0.03988,4.93681 -13.458861,51.46637 -15.490028,53.71078 C 64.778625,192.9021 63.339651,193 37.345012,193 11.333333,193 9.9024807,192.90248 8,191 Z m 21.654988,-77.82874 c -0.910244,-1.00581 -1.640057,-2.91831 -1.621807,-4.25 C 28.082274,105.33887 55.570946,9.029157 56.933419,7.6659693 57.783897,6.8150452 71.933193,6.4325496 109.29939,6.2503688 163.73333,5.9849733 165.14628,6.0959261 165.80812,10.687765 166.19047,13.340519 139.37775,109.65049 137.39396,112.75 L 135.95389,115 H 83.631935 c -49.418672,0 -52.413793,-0.10147 -53.976947,-1.82874 z M 152.75,113.9199 c -1.13866,-0.66321 -1.75,-2.24075 -1.75,-4.5158 0,-3.87627 13.56215,-52.171602 15.20735,-54.153945 C 166.99331,54.30313 174.19846,54 195.92244,54 225.93293,54 227,54.150966 227,58.39674 c 0,3.719303 -14.17365,53.09088 -15.74734,54.85326 -1.41807,1.5881 -4.11549,1.74719 -29.15765,1.71959 -16.87584,-0.0186 -28.27479,-0.42634 -29.34501,-1.04969 z"
+              />
+            </g>
+          </svg>
           <div
             class="text-xl font-bold text-black dark:text-white hover:text-black dark:hover:text-white transition-colors"
           >
@@ -227,7 +238,9 @@
         class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center"
       >
         <div class="animate-slide-in">
-          <div class="text-black dark:text-white text-sm mb-4 animate-pulse-soft">
+          <div
+            class="text-black dark:text-white text-sm mb-4 animate-pulse-soft"
+          >
             [ENGINEERED_PRODUCTS]
           </div>
           <h1
@@ -238,11 +251,10 @@
             ><br />
             filling gaps
           </h1>
-          <p
-            class="text-lg text-black dark:text-white mb-8 leading-relaxed"
-          >
-            Well engineered hackable products designed to fill gaps in the market.
-            Focus on practical solutions with clean design and robust engineering.
+          <p class="text-lg text-black dark:text-white mb-8 leading-relaxed">
+            Well engineered hackable products designed to fill gaps in the
+            market. Focus on practical solutions with clean design and robust
+            engineering.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <button
@@ -293,7 +305,9 @@
     <section id="products" class="py-20 bg-white dark:bg-black">
       <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-16">
-          <div class="text-black dark:text-white text-sm mb-4">[PRODUCT_LINEUP]</div>
+          <div class="text-black dark:text-white text-sm mb-4">
+            [PRODUCT_LINEUP]
+          </div>
           <h2
             class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4"
           >
@@ -321,7 +335,8 @@
               KESTREL
             </h3>
             <p class="text-black dark:text-white mb-4">
-              Li-ion 18650 power bank with robust engineering and hackable design.
+              Li-ion 18650 power bank with robust engineering and hackable
+              design.
             </p>
             <div
               class="text-sm text-black dark:text-white group-hover:text-black dark:group-hover:text-white font-mono transition-colors"
@@ -335,8 +350,12 @@
             class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
             style="--delay: 2"
           >
-            <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
-              <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
+            <div
+              class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800"
+            >
+              <div
+                class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600"
+              >
                 📷
               </div>
             </div>
@@ -411,8 +430,12 @@
             class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
             style="--delay: 5"
           >
-            <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
-              <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
+            <div
+              class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800"
+            >
+              <div
+                class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600"
+              >
                 📷
               </div>
             </div>
@@ -434,8 +457,12 @@
             class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
             style="--delay: 6"
           >
-            <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
-              <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
+            <div
+              class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800"
+            >
+              <div
+                class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600"
+              >
                 📷
               </div>
             </div>
@@ -457,8 +484,12 @@
             class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
             style="--delay: 7"
           >
-            <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
-              <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
+            <div
+              class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800"
+            >
+              <div
+                class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600"
+              >
                 📷
               </div>
             </div>
@@ -478,12 +509,12 @@
       </div>
     </section>
 
-
-
     <!-- Contact Section -->
     <section id="contact" class="py-20">
       <div class="max-w-4xl mx-auto px-4 text-center">
-        <div class="text-black dark:text-white text-sm mb-4">[GET_IN_TOUCH]</div>
+        <div class="text-black dark:text-white text-sm mb-4">
+          [GET_IN_TOUCH]
+        </div>
         <h2
           class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-8"
         >
