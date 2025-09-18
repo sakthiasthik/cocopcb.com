@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TerraLink-c3 - ESP32C3 Modem | cocopcb</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            teal: {
+              50: "#F0FDFA",
+              100: "#CCFBF1",
+              200: "#99F6E4",
+              300: "#5EEAD4",
+              400: "#2DD4BF",
+              500: "#14B8A6",
+              600: "#0D9488",
+              700: "#0F766E",
+              800: "#115E59",
+              900: "#134E4A",
+              950: "#042F2E",
+            },
+            cream: "#FBF8EF",
+            yellow: {
+              400: "#FFB433",
+              500: "#FF9800",
+              600: "#F57C00",
+            },
+          },
+          fontFamily: {
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          animation: {
+            float: "float 6s ease-in-out infinite",
+            "pulse-soft": "pulse-soft 4s ease-in-out infinite",
+            "slide-in": "slide-in 0.6s ease-out",
+          },
+          keyframes: {
+            float: {
+              "0%, 100%": { transform: "translateY(0px)" },
+              "50%": { transform: "translateY(-10px)" },
+            },
+            "pulse-soft": {
+              "0%, 100%": { opacity: "0.6" },
+              "50%": { opacity: "1" },
+            },
+            "slide-in": {
+              "0%": { opacity: "0", transform: "translateY(30px)" },
+              "100%": { opacity: "1", transform: "translateY(0)" },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    .pixel-border {
+      image-rendering: pixelated;
+      border: 2px solid currentColor;
+    }
+
+    .hover-lift {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-4px);
+    }
+
+    .stagger-animation>* {
+      animation-delay: calc(var(--delay) * 0.1s);
+    }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-black text-black dark:text-white font-mono transition-colors duration-500">
+  <!-- Navigation -->
+  <nav
+    class="fixed top-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black dark:border-white z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 233 245"
+          class="h-8 w-8 text-black dark:text-white">
+          <defs id="defs1" />
+          <g id="g1">
+            <path
+              d="m 68.654988,238.17126 c -0.910244,-1.00581 -1.64406,-2.69331 -1.630703,-3.75 0.04097,-3.24127 27.691543,-100.53705 28.921414,-101.76757 0.834429,-0.83487 15.302151,-1.22267 52.353691,-1.40332 55.37242,-0.26997 55.90634,-0.22348 56.50719,4.92078 0.3549,3.03851 -26.27094,98.20974 -28.41849,101.57885 l -1.4342,2.25 h -52.32196 c -49.418667,0 -52.413788,-0.10147 -53.976942,-1.82874 z M 8,191 C 6.9,189.9 6,188.22987 6,187.2886 6,183.21704 20.445025,134.55497 22.163872,132.83613 23.85395,131.14605 26.12995,131 50.777494,131 c 29.992564,0 31.245608,0.25331 31.196712,6.3067 -0.03988,4.93681 -13.458861,51.46637 -15.490028,53.71078 C 64.778625,192.9021 63.339651,193 37.345012,193 11.333333,193 9.9024807,192.90248 8,191 Z m 21.654988,-77.82874 c -0.910244,-1.00581 -1.640057,-2.91831 -1.621807,-4.25 C 28.082274,105.33887 55.570946,9.029157 56.933419,7.6659693 57.783897,6.8150452 71.933193,6.4325496 109.29939,6.2503688 163.73333,5.9849733 165.14628,6.0959261 165.80812,10.687765 166.19047,13.340519 139.37775,109.65049 137.39396,112.75 L 135.95389,115 H 83.631935 c -49.418672,0 -52.413793,-0.10147 -53.976947,-1.82874 Z M 152.75,113.9199 c -1.13866,-0.66321 -1.75,-2.24075 -1.75,-4.5158 0,-3.87627 13.56215,-52.171602 15.20735,-54.153945 C 166.99331,54.30313 174.19846,54 195.92244,54 225.93293,54 227,54.150966 227,58.39674 c 0,3.719303 -14.17365,53.09088 -15.74734,54.85326 -1.41807,1.5881 -4.11549,1.74719 -29.15765,1.71959 -16.87584,-0.0186 -28.27479,-0.42634 -29.34501,-1.04969 z" />
+          </g>
+        </svg>
+        <a href="/"
+          class="text-xl font-bold text-black dark:text-white hover:text-black dark:hover:text-white transition-colors">
+          cocopcb
+        </a>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center">
+        <a href="/#products" class="hover:text-black dark:hover:text-white transition-colors relative group">
+          products
+          <span
+            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="/#contact" class="hover:text-black dark:hover:text-white transition-colors relative group">
+          contact
+          <span
+            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <button id="dark-mode-toggle"
+          class="ml-4 p-2 pixel-border bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white transition-all duration-300 hover-lift">
+          <svg class="w-4 h-4 dark:hidden transition-transform duration-300" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+          <svg class="w-4 h-4 hidden dark:block transition-transform duration-300" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+            </path>
+          </svg>
+        </button>
+      </div>
+      <div class="md:hidden flex items-center">
+        <button id="dark-mode-toggle-mobile"
+          class="mr-4 p-2 pixel-border bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white transition-all duration-300 hover-lift">
+          <svg class="w-4 h-4 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+          <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+            </path>
+          </svg>
+        </button>
+        <button id="menu-toggle"
+          class="text-black dark:text-white hover:text-black dark:hover:text-white transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black border-t border-black dark:border-white">
+      <div class="px-4 py-2 space-y-2">
+        <a href="/#products" class="block py-2 hover:text-black dark:hover:text-white transition-colors">products</a>
+        <a href="/#contact" class="block py-2 hover:text-black dark:hover:text-white transition-colors">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Product Hero Section -->
+  <section class="pt-24 min-h-screen flex items-center">
+    <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-start">
+      <!-- Left Panel - Product Info -->
+      <div class="space-y-8 animate-slide-in">
+        <!-- Product Header -->
+        <div>
+          <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            TERRALINK V0
+          </div>
+          <h1 class="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 leading-tight">
+            ESP32C3 Modem
+          </h1>
+          <p class="text-lg text-black dark:text-white mb-6 leading-relaxed">
+            Advanced connectivity solution for remote monitoring and control. Features ESP32C3 with multiple communication interfaces including WiFi, BLE, and 4G SIM-based connectivity for locations without traditional internet access.
+          </p>
+          <div class="text-sm text-gray-600 dark:text-gray-400 italic">
+            <span class="text-green-500">READY FOR PURCHASE • SHIPS NOW</span>
+          </div>
+        </div>
+
+        <!-- Key Features -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-black dark:text-white">
+            Key Features
+          </h3>
+          <div class="space-y-2 text-black dark:text-white">
+            <div class="flex items-start space-x-3">
+              <span class="text-yellow-500 mt-1">▸</span>
+              <span>ESP32C3 microcontroller with WiFi and BLE support</span>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-yellow-500 mt-1">▸</span>
+              <span>4G SIM-based connectivity for remote locations</span>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-yellow-500 mt-1">▸</span>
+              <span>Multiple communication interfaces: UART, SPI, I2C</span>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-yellow-500 mt-1">▸</span>
+              <span>Separate USB Type-C ports for modem and WiFi module</span>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-yellow-500 mt-1">▸</span>
+              <span>Antenna tuned for 2400-2500 MHz frequency range</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Specifications -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-6 pixel-border border-gray-300 dark:border-gray-700">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-4">
+            Technical Specifications
+          </h3>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <div class="font-bold text-black dark:text-white">
+                Input Voltage
+              </div>
+              <div class="text-gray-600 dark:text-gray-400">5V 2A</div>
+            </div>
+            <div>
+              <div class="font-bold text-black dark:text-white">
+                Communication
+              </div>
+              <div class="text-gray-600 dark:text-gray-400">
+                UART, SPI, I2C, WiFi, BLE, 4G
+              </div>
+            </div>
+            <div>
+              <div class="font-bold text-black dark:text-white">PCB Size</div>
+              <div class="text-gray-600 dark:text-gray-400">100mm × 40mm</div>
+            </div>
+            <div>
+              <div class="font-bold text-black dark:text-white">
+                Antenna Frequency
+              </div>
+              <div class="text-gray-600 dark:text-gray-400">2400-2500 MHz</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-300 dark:border-gray-700">
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              For complete technical documentation, visit our
+              <a href="https://github.com/sakthiasthik/terralink"
+                class="text-yellow-500 hover:text-yellow-400 transition-colors font-bold border-b border-yellow-500"
+                target="_blank">
+                GitHub repository
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing & Actions -->
+        <div class="space-y-4">
+          <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <div>
+              <div class="text-2xl font-bold text-black dark:text-white">
+                Price: 3500 INR
+              </div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                Ready to ship worldwide
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button
+              class="bg-black text-white dark:bg-white dark:text-black px-8 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift pixel-border">
+              BUY NOW
+            </button>
+            <a href="https://github.com/sakthiasthik/"
+              class="border-2 border-black dark:border-white text-black dark:text-white px-8 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift text-center"
+              target="_blank">
+              VIEW ON GITHUB
+            </a>
+          </div>
+        </div>
+
+        <!-- Additional Resources -->
+        <div class="space-y-3">
+          <h3 class="text-lg font-bold text-black dark:text-white">
+            Resources
+          </h3>
+          <div class="space-y-2">
+            <!-- Schematics & PCB Layout PDF -->
+            <a href="assets/terralink/terralink_sch.pdf"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit"
+              target="_blank">
+              📋 Schematics & PCB Layout
+            </a>
+
+            <!-- Assembly Guide PDF -->
+            <a href="assets/terralink/terralink_assembly_guide.pdf"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit"
+              target="_blank">
+              📖 Assembly Guide
+            </a>
+
+            <!-- Bill of Materials Excel -->
+            <a href="assets/terralink/terralink_bom.xlsx"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit"
+              download>
+              🔧 Bill of Materials (BOM)
+            </a>
+
+            <!-- Community Forum (unchanged placeholder link) -->
+            <a href="#"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit">
+              💬 Community Forum
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Panel - Image Carousel -->
+      <div class="relative">
+        <div class="bg-white dark:bg-black border-2 border-black dark:border-white pixel-border overflow-hidden">
+          <!-- Image Display Area -->
+          <div class="relative h-96 lg:h-[500px] flex items-center justify-center">
+            <div id="image-container" class="w-full h-full flex items-center justify-center p-4">
+              <!-- Default Image -->
+              <img id="main-image" src="assets/terralink/terralink_side1.png" alt="TerraLink-c3 Modem"
+                class="max-w-full max-h-full object-contain transition-all duration-500" />
+
+              <!-- 3D Viewer Container (hidden by default) -->
+              <div id="viewer-container" class="w-full h-full hidden items-center justify-center">
+                <model-viewer class="w-full h-full" alt="" src="assets/terralink/terralink.glb" ar environment-image=""
+                  poster="" shadow-intensity="1" camera-controls touch-action="pan-y">
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Navigation -->
+          <div class="border-t-2 border-black dark:border-white bg-gray-50 dark:bg-gray-900">
+            <div class="flex">
+              <button
+                class="image-nav-btn flex-1 p-3 border-r border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors active"
+                data-image="assets/terralink/terralink_side1.png" data-label="Isometric">
+                <div class="text-xs font-bold">ISO VIEW</div>
+              </button>
+              <button
+                class="image-nav-btn flex-1 p-3 border-r border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                data-image="assets/terralink/terralink_top.png" data-label="Front">
+                <div class="text-xs font-bold">FRONT</div>
+              </button>
+              <button
+                class="image-nav-btn flex-1 p-3 border-r border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                data-image="assets/terralink/terralink_bot.png" data-label="Back">
+                <div class="text-xs font-bold">BACK</div>
+              </button>
+              <button
+                class="image-nav-btn flex-1 p-3 border-r border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                data-image="images/terralink-pcb.jpeg" data-label="PCB">
+                <div class="text-xs font-bold">PCB</div>
+              </button>
+              <button class="viewer-nav-btn flex-1 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <div class="text-xs font-bold">3D VIEW</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Info Badge -->
+        <div class="absolute top-4 left-4 bg-green-500 text-black px-3 py-1 text-xs font-bold">
+          READY TO SHIP
+        </div>
+
+        <!-- Floating Spec Badge -->
+        <div
+          class="absolute top-4 right-4 bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-xs font-bold">
+          ESP32C3 • 4G/WiFi/BLE
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-black text-black dark:text-white py-12 border-t border-black dark:border-white mt-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center">
+        <p class="text-black dark:text-white">Hardware Done Right</p>
+      </div>
+      <div class="mt-4 pt-4 text-center text-black dark:text-white">
+        <p class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+          © 2025 cocopcb.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode state with localStorage persistence
+    let darkMode =
+      localStorage.getItem("darkMode") === "true" ||
+      (!localStorage.getItem("darkMode") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    // Dark mode toggle function
+    function toggleDarkMode() {
+      darkMode = !darkMode;
+      localStorage.setItem("darkMode", darkMode);
+      if (darkMode) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+
+    // Initialize dark mode
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    }
+
+    // Mobile menu toggle
+    document
+      .getElementById("menu-toggle")
+      .addEventListener("click", function () {
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("hidden");
+      });
+
+    // Dark mode toggle event listeners
+    document
+      .getElementById("dark-mode-toggle")
+      .addEventListener("click", toggleDarkMode);
+    document
+      .getElementById("dark-mode-toggle-mobile")
+      .addEventListener("click", toggleDarkMode);
+
+    // Image carousel functionality
+    const mainImage = document.getElementById("main-image");
+    const viewerContainer = document.getElementById("viewer-container");
+    const imageNavBtns = document.querySelectorAll(".image-nav-btn");
+    const viewerNavBtn = document.querySelector(".viewer-nav-btn");
+
+    // Handle image navigation
+    imageNavBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const imageSrc = btn.dataset.image;
+
+        // Remove active class from all buttons
+        document
+          .querySelectorAll(".image-nav-btn, .viewer-nav-btn")
+          .forEach((b) => {
+            b.classList.remove("active");
+          });
+
+        // Add active class to clicked button
+        btn.classList.add("active");
+
+        // Show image, hide 3D viewer
+        mainImage.src = imageSrc;
+        mainImage.classList.remove("hidden");
+        viewerContainer.classList.add("hidden");
+      });
+    });
+
+    // Handle 3D viewer navigation
+    viewerNavBtn.addEventListener("click", () => {
+      // Remove active class from all buttons
+      document
+        .querySelectorAll(".image-nav-btn, .viewer-nav-btn")
+        .forEach((b) => {
+          b.classList.remove("active");
+        });
+
+      // Add active class to viewer button
+      viewerNavBtn.classList.add("active");
+
+      // Hide image, show 3D viewer
+      mainImage.classList.add("hidden");
+      viewerContainer.classList.remove("hidden");
+      viewerContainer.classList.add("flex");
+    });
+
+    // Enhanced nav background on scroll
+    window.addEventListener("scroll", function () {
+      const nav = document.querySelector("nav");
+      if (window.scrollY > 50) {
+        nav.classList.add(
+          "backdrop-blur-xl",
+          "bg-opacity-95",
+          "dark:bg-opacity-95"
+        );
+      } else {
+        nav.classList.remove(
+          "backdrop-blur-xl",
+          "bg-opacity-95",
+          "dark:bg-opacity-95"
+        );
+      }
+    });
+
+    // Add some CSS for active button state
+    document.addEventListener("DOMContentLoaded", function () {
+      const style = document.createElement("style");
+      style.textContent = `
+          .image-nav-btn.active,
+          .viewer-nav-btn.active {
+            background-color: rgb(34 197 94);
+            color: white;
+          }
+          .dark .image-nav-btn.active,
+          .dark .viewer-nav-btn.active {
+            background-color: rgb(34 197 94);
+            color: white;
+          }
+        `;
+      document.head.appendChild(style);
+    });
+  </script>
+</body>
+
+</html>
