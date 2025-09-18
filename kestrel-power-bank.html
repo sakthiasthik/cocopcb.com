@@ -241,7 +241,8 @@
             <div class="text-sm text-gray-600 dark:text-gray-400">
               For complete technical documentation, visit our
               <a href="https://github.com/sakthiasthik/kestrel"
-                class="text-yellow-500 hover:text-yellow-400 transition-colors font-bold border-b border-yellow-500">
+                class="text-yellow-500 hover:text-yellow-400 transition-colors font-bold border-b border-yellow-500"
+                target="_blank">
                 GitHub repository
               </a>
             </div>
@@ -266,8 +267,9 @@
               class="bg-black text-white dark:bg-white dark:text-black px-8 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift pixel-border">
               BUY NOW
             </button>
-            <a href="https://github.com/sakthiasthik/kestrel"
-              class="border-2 border-black dark:border-white text-black dark:text-white px-8 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift text-center">
+            <a href="https://github.com/sakthiasthik/"
+              class="border-2 border-black dark:border-white text-black dark:text-white px-8 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift text-center"
+              target="_blank">
               VIEW ON GITHUB
             </a>
           </div>
@@ -279,24 +281,35 @@
             Resources
           </h3>
           <div class="space-y-2">
-            <a href="#"
-              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit">
+            <!-- Schematics & PCB Layout PDF -->
+            <a href="assets/kestrel/kestrel_sch.pdf"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit"
+              target="_blank">
               📋 Schematics & PCB Layout
             </a>
-            <a href="#"
-              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit">
+
+            <!-- Assembly Guide PDF -->
+            <a href="assets/kestrel/kestrel_assembly_guide.pdf"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit"
+              target="_blank">
               📖 Assembly Guide
             </a>
-            <a href="#"
-              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit">
+
+            <!-- Bill of Materials Excel -->
+            <a href="assets/kestrel/kestrel_bom.xlsx"
+              class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit"
+              download>
               🔧 Bill of Materials (BOM)
             </a>
+
+            <!-- Community Forum (unchanged placeholder link) -->
             <a href="#"
               class="block text-yellow-500 hover:text-yellow-400 transition-colors border-b border-yellow-500 w-fit">
               💬 Community Forum
             </a>
           </div>
         </div>
+
       </div>
 
       <!-- Right Panel - Image Carousel -->
@@ -311,12 +324,9 @@
 
               <!-- 3D Viewer Container (hidden by default) -->
               <div id="viewer-container" class="w-full h-full hidden items-center justify-center">
-                <model-viewer class="w-full h-full" alt="" src="assets/kestrel/kestrel.glb" 
-                ar environment-image="" 
-                poster="" 
-                shadow-intensity="1" 
-                camera-controls touch-action="pan-y">
-              </model-viewer>
+                <model-viewer class="w-full h-full" alt="" src="assets/kestrel/kestrel.glb" ar environment-image=""
+                  poster="" shadow-intensity="1" camera-controls touch-action="pan-y">
+                </model-viewer>
               </div>
             </div>
           </div>
