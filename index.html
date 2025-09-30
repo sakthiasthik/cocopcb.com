@@ -80,6 +80,12 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
   
   <style>
+    /* Global CSS Variables for easy customization */
+    :root {
+      /* Animation color - Change this value to update all animations */
+      --animation-color: #14B8A6;  
+    }
+    
     /* Custom CSS styles for pixel borders and animations */
     .pixel-border {
       image-rendering: pixelated;
@@ -100,14 +106,18 @@
       animation-delay: calc(var(--delay) * 0.1s);
     }
     
-    /* 3D card effect with perspective */
+    /* Product card pop-up effect (replaces 3D effect) */
     .product-card {
-      transform-style: preserve-3d;
-      transition: transform 0.6s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .product-card:hover {
-      transform: rotateY(5deg) rotateX(-5deg);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .dark .product-card:hover {
+      box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04);
     }
     
     /* Glow effect for elements */
@@ -119,7 +129,7 @@
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     }
     
-    /* Hardware spec animation with underline effect */
+    /* Hardware spec animation with underline effect - Using global variable */
     .hardware-spec {
       position: relative;
       overflow: hidden;
@@ -132,12 +142,34 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #14B8A6, transparent);
+      background: linear-gradient(90deg, transparent, var(--animation-color), transparent);
       transform: translateX(-100%);
       transition: transform 0.6s;
     }
     
     .hardware-spec:hover::after {
+      transform: translateX(100%);
+    }
+    
+    /* Navigation link animation - Using global variable */
+    .nav-link {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--animation-color), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .nav-link:hover::after {
       transform: translateX(100%);
     }
     
@@ -215,7 +247,7 @@
     }
     
     .slide-indicator.active {
-      background-color: #14B8A6;
+      background-color: var(--animation-color);
     }
     
     /* Remove gaps in slideshow */
@@ -266,12 +298,12 @@
       
       <!-- Desktop Navigation Links -->
       <div class="hidden md:flex space-x-8 items-center">
-        <a href="#products" class="hover:text-black dark:hover:text-white transition-colors relative group">
+        <a href="#products" class="hover:text-black dark:hover:text-white transition-colors relative group nav-link">
           products
           <span
             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="#contact" class="hover:text-black dark:hover:text-white transition-colors relative group">
+        <a href="#contact" class="hover:text-black dark:hover:text-white transition-colors relative group nav-link">
           contact
           <span
             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -329,9 +361,9 @@
   <section class="pt-24 min-h-screen flex items-center relative overflow-hidden">
     <!-- Background Tech Badges (floating elements) -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="tech-badge absolute top-40 left-10 text-6xl opacity-40">⚡</div>
+      <div class="tech-badge absolute top-40 left-20 text-6xl opacity-40">⚡</div>
       <div class="tech-badge absolute top-40 right-10 text-6xl opacity-40">🔧</div>
-      <div class="tech-badge absolute bottom-20 left-10 text-6xl opacity-40">📡</div>
+      <div class="tech-badge absolute bottom-20 left-20 text-6xl opacity-40">📡</div>
       <div class="tech-badge absolute bottom-20 right-10 text-6xl opacity-40">🔋</div>
     </div>
     
@@ -347,13 +379,13 @@
           specs, sourceable parts, firmware you control.
         </p>
         
-        <!-- Call to Action Buttons with Enhanced Shimmer Effect -->
+        <!-- Call to Action Buttons with Enhanced Shimmer Effect and Hardware Spec Animation -->
         <div class="flex flex-col sm:flex-row gap-4 mb-8">
-          <a class="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10"
+          <a class="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10 hardware-spec"
             href="#products">
             <span class="relative z-10">VIEW PRODUCTS</span>
           </a>
-          <a class="border-2 border-black dark:border-white text-black dark:text-white px-6 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10"
+          <a class="border-2 border-black dark:border-white text-black dark:text-white px-6 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10 hardware-spec"
             href="#contact">
             <span class="relative z-10">HARDWARE CONSULTING</span>
           </a>
@@ -380,13 +412,13 @@
                 <img src="assets/kestrel/kestrel_side.png" alt="Kestrel Power Bank" class="slide-image" />
               </div>
               <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_front.png" alt="Kestrel Power Bank Front" class="slide-image" />
+                <img src="assets/terrabeacon/terrabeacon_100_top.png" alt="terrabeacon top view" class="slide-image" />
               </div>
               <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_ports.png" alt="Kestrel Power Bank Ports" class="slide-image" />
+                <img src="assets/terralink-c3/terralink-c3_top.jpg" alt="terralink c3 top view" class="slide-image" />
               </div>
               <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank Top" class="slide-image" />
+                <img src="assets/terrapower_duo/terrapower_duo_iso.png" alt="Kestrel Power Bank Top" class="slide-image" />
               </div>
             </div>
             
@@ -435,7 +467,7 @@
             <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             KESTREL
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -456,7 +488,7 @@
             <img src="assets/terralink-c3/terralink-c3_top.jpg" alt="Terralink Modem"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             TERRALINK
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -476,7 +508,7 @@
             <img src="assets/terrapower_duo/terrapower_duo_top.png" alt="Terrapower Duo"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             TERRAPOWER DUO
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -499,7 +531,7 @@
             <img src="assets/terrabeacon/terrabeacon_100_top.png" alt="Terra Beacon"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             TERRA BEACON
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -520,7 +552,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             RASPBERRY PI 4G HAT
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -541,7 +573,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             LINUX SHELL REFERENCE
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -562,7 +594,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
             HOURGLASS
           </h3>
           <p class="text-black dark:text-white mb-4">
