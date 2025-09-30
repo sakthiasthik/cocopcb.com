@@ -7,6 +7,7 @@
   <title>cocopcb - Hardware Done Right</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    // Tailwind configuration with custom colors, fonts, and animations
     tailwind.config = {
       darkMode: "class",
       theme: {
@@ -41,6 +42,7 @@
             "slide-in": "slide-in 0.6s ease-out",
             "fade-in": "fade-in 1s ease-out",
             "glow": "glow 2s ease-in-out infinite alternate",
+            "shimmer": "shimmer 2s infinite",
           },
           keyframes: {
             float: {
@@ -63,6 +65,10 @@
               "0%": { boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" },
               "100%": { boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)" },
             },
+            shimmer: {
+              "0%": { backgroundPosition: "-1000px 0" },
+              "100%": { backgroundPosition: "1000px 0" }
+            }
           },
         },
       },
@@ -70,34 +76,17 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   
-  <!-- SEO Optimization -->
-  <meta name="description" content="Cocopcb - Hardware Done Right. Well engineered hackable products filling gaps in the market.">
-  <meta name="keywords" content="hardware, electronics, hackable, open source, PCB, power bank, ESP32, IoT">
-  <meta name="author" content="cocopcb">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cocopcb.github.io/">
-  <meta property="og:title" content="cocopcb - Hardware Done Right">
-  <meta property="og:description" content="Hardware made by people who actually use what they build. Real specs, sourceable parts, firmware you control.">
-  <meta property="og:image" content="https://cocopcb.github.io/assets/kestrel/kestrel_side.png">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://cocopcb.github.io/">
-  <meta property="twitter:title" content="cocopcb - Hardware Done Right">
-  <meta property="twitter:description" content="Hardware made by people who actually use what they build. Real specs, sourceable parts, firmware you control.">
-  <meta property="twitter:image" content="https://cocopcb.github.io/assets/kestrel/kestrel_side.png">
-  
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
   
   <style>
+    /* Custom CSS styles for pixel borders and animations */
     .pixel-border {
       image-rendering: pixelated;
       border: 2px solid currentColor;
     }
 
+    /* Hover lift effect for cards */
     .hover-lift {
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -106,10 +95,12 @@
       transform: translateY(-4px);
     }
 
+    /* Stagger animation delay calculation */
     .stagger-animation>* {
       animation-delay: calc(var(--delay) * 0.1s);
     }
     
+    /* 3D card effect with perspective */
     .product-card {
       transform-style: preserve-3d;
       transition: transform 0.6s;
@@ -119,6 +110,7 @@
       transform: rotateY(5deg) rotateX(-5deg);
     }
     
+    /* Glow effect for elements */
     .glow-effect {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
@@ -127,6 +119,7 @@
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     }
     
+    /* Hardware spec animation with underline effect */
     .hardware-spec {
       position: relative;
       overflow: hidden;
@@ -148,10 +141,12 @@
       transform: translateX(100%);
     }
     
+    /* Loading screen transition */
     .loading-screen {
       transition: opacity 0.5s ease-out;
     }
     
+    /* Tech badge floating animation */
     .tech-badge {
       animation: float 3s ease-in-out infinite;
     }
@@ -168,6 +163,7 @@
       animation-delay: 1.5s;
     }
     
+    /* Typewriter animation for text */
     @keyframes typewriter {
       from { width: 0; }
       to { width: 100%; }
@@ -178,22 +174,81 @@
       white-space: nowrap;
       animation: typewriter 3s steps(40, end);
     }
+    
+    /* Enhanced shimmer animation for buttons and links */
+    .shimmer-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .shimmer-effect::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.5),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s infinite;
+    }
+    
+    .dark .shimmer-effect::before {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 0, 0, 0.5),
+        transparent
+      );
+    }
+    
+    /* Rounded rectangle for slide indicators */
+    .slide-indicator {
+      border-radius: 9999px;
+      height: 6px;
+      transition: all 0.3s ease;
+    }
+    
+    .slide-indicator.active {
+      background-color: #14B8A6;
+    }
+    
+    /* Remove gaps in slideshow */
+    .slideshow-container {
+      padding: 0;
+      margin: 0;
+    }
+    
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   </style>
 </head>
 
 <body class="bg-white dark:bg-black text-black dark:text-white font-mono transition-colors duration-500">
-  <!-- Loading Screen -->
+  <!-- Loading Screen (commented out as requested) -->
+  <!--
   <div id="loading-screen" class="loading-screen fixed inset-0 bg-white dark:bg-black z-50 flex items-center justify-center">
     <div class="text-center">
       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white mx-auto mb-4"></div>
       <p class="text-black dark:text-white font-mono">Loading Hardware...</p>
     </div>
   </div>
+  -->
 
-  <!-- Navigation -->
+  <!-- Navigation Bar -->
   <nav
     class="fixed top-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black dark:border-white z-40 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo and Brand Name -->
       <div class="flex items-center space-x-3 cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 233 245"
           class="h-8 w-8 text-black dark:text-white">
@@ -208,19 +263,11 @@
           cocopcb
         </div>
       </div>
+      
+      <!-- Desktop Navigation Links -->
       <div class="hidden md:flex space-x-8 items-center">
         <a href="#products" class="hover:text-black dark:hover:text-white transition-colors relative group">
           products
-          <span
-            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#comparison" class="hover:text-black dark:hover:text-white transition-colors relative group">
-          compare
-          <span
-            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#testimonials" class="hover:text-black dark:hover:text-white transition-colors relative group">
-          reviews
           <span
             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
@@ -229,6 +276,7 @@
           <span
             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
+        <!-- Dark Mode Toggle Button -->
         <button id="dark-mode-toggle"
           class="ml-4 p-2 pixel-border bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white transition-all duration-300 hover-lift">
           <svg class="w-4 h-4 dark:hidden transition-transform duration-300" fill="none" stroke="currentColor"
@@ -244,6 +292,8 @@
           </svg>
         </button>
       </div>
+      
+      <!-- Mobile Navigation Menu -->
       <div class="md:hidden flex items-center">
         <button id="dark-mode-toggle-mobile"
           class="mr-4 p-2 pixel-border bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white transition-all duration-300 hover-lift">
@@ -265,11 +315,11 @@
         </button>
       </div>
     </div>
+    
+    <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black border-t border-black dark:border-white">
       <div class="px-4 py-2 space-y-2">
         <a href="#products" class="block py-2 hover:text-black dark:hover:text-white transition-colors">products</a>
-        <a href="#comparison" class="block py-2 hover:text-black dark:hover:text-white transition-colors">compare</a>
-        <a href="#testimonials" class="block py-2 hover:text-black dark:hover:text-white transition-colors">reviews</a>
         <a href="#contact" class="block py-2 hover:text-black dark:hover:text-white transition-colors">contact</a>
       </div>
     </div>
@@ -277,15 +327,17 @@
 
   <!-- Hero Section -->
   <section class="pt-24 min-h-screen flex items-center relative overflow-hidden">
-    <!-- Background Tech Badges -->
+    <!-- Background Tech Badges (floating elements) -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="tech-badge absolute top-20 left-10 text-6xl opacity-10">⚡</div>
-      <div class="tech-badge absolute top-40 right-20 text-6xl opacity-10">🔧</div>
-      <div class="tech-badge absolute bottom-20 left-20 text-6xl opacity-10">📡</div>
-      <div class="tech-badge absolute bottom-40 right-10 text-6xl opacity-10">🔋</div>
+      <div class="tech-badge absolute top-40 left-10 text-6xl opacity-40">⚡</div>
+      <div class="tech-badge absolute top-40 right-10 text-6xl opacity-40">🔧</div>
+      <div class="tech-badge absolute bottom-20 left-10 text-6xl opacity-40">📡</div>
+      <div class="tech-badge absolute bottom-20 right-10 text-6xl opacity-40">🔋</div>
     </div>
     
+    <!-- Hero Content -->
     <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center relative z-10">
+      <!-- Hero Text Content -->
       <div class="animate-slide-in">
         <h1 class="text-4xl md:text-6xl font-bold text-black dark:text-white mb-6 leading-tight">
           Hardware Done Right
@@ -294,18 +346,20 @@
           Hardware made by people who actually use what they build. Real
           specs, sourceable parts, firmware you control.
         </p>
+        
+        <!-- Call to Action Buttons with Enhanced Shimmer Effect -->
         <div class="flex flex-col sm:flex-row gap-4 mb-8">
-          <a class="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift"
+          <a class="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10"
             href="#products">
-            VIEW PRODUCTS
+            <span class="relative z-10">VIEW PRODUCTS</span>
           </a>
-          <a class="border-2 border-black dark:border-white text-black dark:text-white px-6 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift"
+          <a class="border-2 border-black dark:border-white text-black dark:text-white px-6 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10"
             href="#contact">
-            HARDWARE CONSULTING
+            <span class="relative z-10">HARDWARE CONSULTING</span>
           </a>
         </div>
         
-        <!-- Tech Stack -->
+        <!-- Tech Stack with Hardware Spec Animation -->
         <div class="flex flex-wrap gap-2">
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">Open Source</span>
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">Hackable</span>
@@ -313,49 +367,40 @@
           <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">18650</span>
         </div>
       </div>
+      
+      <!-- Hero Image with Slideshow -->
       <div class="relative" style="--delay: 2">
         <div
-          class="w-full h-96 bg-white dark:bg-black border-black dark:border-white pixel-border flex items-center justify-center animate-float overflow-hidden p-2 md:p-4 glow-effect">
+          class="w-full h-96 bg-white dark:bg-black border-black dark:border-white pixel-border flex items-center justify-center animate-float overflow-hidden p-0 glow-effect">
           <!-- Slideshow Container -->
-          <div class="relative w-full h-full overflow-hidden">
+          <div class="relative w-full h-full overflow-hidden slideshow-container cursor-pointer" id="slideshow-container">
             <!-- Slides -->
             <div class="slides-container relative w-full h-full">
               <div class="slide absolute w-full h-full opacity-100 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_side.png" alt="Kestrel Power Bank" class="w-full h-full object-cover" />
+                <img src="assets/kestrel/kestrel_side.png" alt="Kestrel Power Bank" class="slide-image" />
               </div>
               <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_front.png" alt="Kestrel Power Bank Front" class="w-full h-full object-cover" />
+                <img src="assets/kestrel/kestrel_front.png" alt="Kestrel Power Bank Front" class="slide-image" />
               </div>
               <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_ports.png" alt="Kestrel Power Bank Ports" class="w-full h-full object-cover" />
+                <img src="assets/kestrel/kestrel_ports.png" alt="Kestrel Power Bank Ports" class="slide-image" />
               </div>
               <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
-                <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank Top" class="w-full h-full object-cover" />
+                <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank Top" class="slide-image" />
               </div>
             </div>
             
-            <!-- Navigation Arrows -->
-            <button id="prevBtn" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button id="nextBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            
-            <!-- Slide Indicators -->
+            <!-- Slide Indicators (Rounded Rectangles) -->
             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              <button class="indicator w-3 h-3 rounded-full bg-black dark:bg-white opacity-100 transition-opacity" data-slide="0"></button>
-              <button class="indicator w-3 h-3 rounded-full bg-black dark:bg-white opacity-50 transition-opacity" data-slide="1"></button>
-              <button class="indicator w-3 h-3 rounded-full bg-black dark:bg-white opacity-50 transition-opacity" data-slide="2"></button>
-              <button class="indicator w-3 h-3 rounded-full bg-black dark:bg-white opacity-50 transition-opacity" data-slide="3"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-100 transition-opacity active" data-slide="0"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-50 transition-opacity" data-slide="1"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-50 transition-opacity" data-slide="2"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-50 transition-opacity" data-slide="3"></button>
             </div>
           </div>
         </div>
-        <!-- Floating elements with staggered animations -->
+        
+        <!-- Floating Elements with Staggered Animations -->
         <div class="absolute -top-4 -right-4 w-8 h-8 bg-black dark:bg-white rounded-full animate-float opacity-80"
           style="animation-delay: 1s"></div>
         <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-black dark:bg-white transform rotate-45 animate-float"
@@ -370,6 +415,7 @@
   <!-- Products Section -->
   <section id="products" class="py-20 bg-white dark:bg-black">
     <div class="max-w-6xl mx-auto px-4">
+      <!-- Section Header -->
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
           Products
@@ -379,6 +425,7 @@
         </p>
       </div>
 
+      <!-- Main Products Grid -->
       <div class="grid md:grid-cols-3 gap-8 stagger-animation">
         <!-- Kestrel Power Bank -->
         <a href="kestrel-power-bank.html"
@@ -388,7 +435,7 @@
             <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             KESTREL
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -409,7 +456,7 @@
             <img src="assets/terralink-c3/terralink-c3_top.jpg" alt="Terralink Modem"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             TERRALINK
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -429,7 +476,7 @@
             <img src="assets/terrapower_duo/terrapower_duo_top.png" alt="Terrapower Duo"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             TERRAPOWER DUO
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -452,7 +499,7 @@
             <img src="assets/terrabeacon/terrabeacon_100_top.png" alt="Terra Beacon"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             TERRA BEACON
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -473,7 +520,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             RASPBERRY PI 4G HAT
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -494,7 +541,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             LINUX SHELL REFERENCE
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -515,7 +562,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 hardware-spec">
             HOURGLASS
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -530,141 +577,6 @@
     </div>
   </section>
 
-  <!-- Product Comparison Section -->
-  <section id="comparison" class="py-20 bg-gray-100 dark:bg-gray-900">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
-          Product Comparison
-        </h2>
-        <p class="text-black dark:text-white max-w-2xl mx-auto">
-          Find the perfect hardware solution for your project.
-        </p>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full border-collapse border border-black dark:border-white">
-          <thead>
-            <tr class="bg-black text-white dark:bg-white dark:text-black">
-              <th class="border border-black dark:border-white p-3 text-left">Feature</th>
-              <th class="border border-black dark:border-white p-3 text-center">Kestrel</th>
-              <th class="border border-black dark:border-white p-3 text-center">Terralink</th>
-              <th class="border border-black dark:border-white p-3 text-center">Terrapower Duo</th>
-              <th class="border border-black dark:border-white p-3 text-center">Terra Beacon</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="border border-black dark:border-white p-3 font-bold">Battery</td>
-              <td class="border border-black dark:border-white p-3 text-center">1x 18650</td>
-              <td class="border border-black dark:border-white p-3 text-center">-</td>
-              <td class="border border-black dark:border-white p-3 text-center">2x 18650</td>
-              <td class="border border-black dark:border-white p-3 text-center">CR2032</td>
-            </tr>
-            <tr class="bg-gray-100 dark:bg-gray-800">
-              <td class="border border-black dark:border-white p-3 font-bold">Connectivity</td>
-              <td class="border border-black dark:border-white p-3 text-center">USB</td>
-              <td class="border border-black dark:border-white p-3 text-center">ESP32C3</td>
-              <td class="border border-black dark:border-white p-3 text-center">USB</td>
-              <td class="border border-black dark:border-white p-3 text-center">BLE 5.0</td>
-            </tr>
-            <tr>
-              <td class="border border-black dark:border-white p-3 font-bold">Use Case</td>
-              <td class="border border-black dark:border-white p-3 text-center">Portable Power</td>
-              <td class="border border-black dark:border-white p-3 text-center">IoT Modem</td>
-              <td class="border border-black dark:border-white p-3 text-center">Extended Power</td>
-              <td class="border border-black dark:border-white p-3 text-center">Location Tracking</td>
-            </tr>
-            <tr class="bg-gray-100 dark:bg-gray-800">
-              <td class="border border-black dark:border-white p-3 font-bold">Open Source</td>
-              <td class="border border-black dark:border-white p-3 text-center">✓</td>
-              <td class="border border-black dark:border-white p-3 text-center">✓</td>
-              <td class="border border-black dark:border-white p-3 text-center">✓</td>
-              <td class="border border-black dark:border-white p-3 text-center">✓</td>
-            </tr>
-            <tr>
-              <td class="border border-black dark:border-white p-3 font-bold">Price Range</td>
-              <td class="border border-black dark:border-white p-3 text-center">$</td>
-              <td class="border border-black dark:border-white p-3 text-center">$$</td>
-              <td class="border border-black dark:border-white p-3 text-center">$$</td>
-              <td class="border border-black dark:border-white p-3 text-center">$</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section id="testimonials" class="py-20 bg-white dark:bg-black">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
-          What Hackers Say
-        </h2>
-        <p class="text-black dark:text-white max-w-2xl mx-auto">
-          Real feedback from the hardware community.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8 stagger-animation">
-        <div class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover-lift" style="--delay: 1">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-black dark:bg-white rounded-full mr-4 flex items-center justify-center text-white dark:text-black font-bold">
-              AC
-            </div>
-            <div>
-              <h4 class="font-bold text-black dark:text-white">Alex Chen</h4>
-              <p class="text-sm text-black dark:text-white">Hardware Engineer</p>
-            </div>
-          </div>
-          <div class="flex mb-3">
-            <span class="text-yellow-500">★★★★★</span>
-          </div>
-          <p class="text-black dark:text-white italic">
-            "The Kestrel power bank is exactly what I needed for my portable projects. The hackable firmware is a game changer!"
-          </p>
-        </div>
-
-        <div class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover-lift" style="--delay: 2">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-black dark:bg-white rounded-full mr-4 flex items-center justify-center text-white dark:text-black font-bold">
-              SM
-            </div>
-            <div>
-              <h4 class="font-bold text-black dark:text-white">Sarah Miller</h4>
-              <p class="text-sm text-black dark:text-white">IoT Developer</p>
-            </div>
-          </div>
-          <div class="flex mb-3">
-            <span class="text-yellow-500">★★★★★</span>
-          </div>
-          <p class="text-black dark:text-white italic">
-            "Terralink C3 has been perfect for my smart home projects. Reliable connectivity and excellent documentation."
-          </p>
-        </div>
-
-        <div class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover-lift" style="--delay: 3">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-black dark:bg-white rounded-full mr-4 flex items-center justify-center text-white dark:text-black font-bold">
-              RJ
-            </div>
-            <div>
-              <h4 class="font-bold text-black dark:text-white">Raj Johnson</h4>
-              <p class="text-sm text-black dark:text-white">Maker & Tinkerer</p>
-            </div>
-          </div>
-          <div class="flex mb-3">
-            <span class="text-yellow-500">★★★★★</span>
-          </div>
-          <p class="text-black dark:text-white italic">
-            "Finally, hardware that respects the user! Open source firmware and schematics make customization a breeze."
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Contact Section -->
   <section id="contact" class="py-20">
     <div class="max-w-4xl mx-auto px-4 text-center">
@@ -673,6 +585,7 @@
       </h2>
 
       <div class="grid md:grid-cols-2 gap-8 mb-8 stagger-animation">
+        <!-- FOSS India 2025 Information -->
         <div class="hover-lift" style="--delay: 1">
           <h3 class="text-xl font-bold text-black dark:text-white mb-6">
             FOSS India 2025
@@ -689,6 +602,7 @@
           </div>
         </div>
 
+        <!-- Direct Contact Information -->
         <div class="hover-lift" style="--delay: 2">
           <h3 class="text-xl font-bold text-black dark:text-white mb-6">
             Direct Contact
@@ -732,7 +646,8 @@
   </footer>
 
   <script>
-    // Loading screen
+    // Loading screen functionality (commented out as requested)
+    /*
     window.addEventListener('load', function() {
       setTimeout(function() {
         document.getElementById('loading-screen').style.opacity = '0';
@@ -741,6 +656,7 @@
         }, 500);
       }, 1000);
     });
+    */
 
     // Dark mode state with localStorage persistence
     let darkMode =
@@ -759,12 +675,12 @@
       }
     }
 
-    // Initialize dark mode
+    // Initialize dark mode based on user preference or system setting
     if (darkMode) {
       document.documentElement.classList.add("dark");
     }
 
-    // Mobile menu toggle
+    // Mobile menu toggle functionality
     document
       .getElementById("menu-toggle")
       .addEventListener("click", function () {
@@ -772,7 +688,7 @@
         mobileMenu.classList.toggle("hidden");
       });
 
-    // Dark mode toggle event listeners
+    // Dark mode toggle event listeners for both desktop and mobile
     document
       .getElementById("dark-mode-toggle")
       .addEventListener("click", toggleDarkMode);
@@ -860,9 +776,8 @@
     // Slideshow functionality
     document.addEventListener('DOMContentLoaded', function() {
       const slides = document.querySelectorAll('.slide');
-      const indicators = document.querySelectorAll('.indicator');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
+      const indicators = document.querySelectorAll('.slide-indicator');
+      const slideshowContainer = document.getElementById('slideshow-container');
       let currentSlide = 0;
       let slideInterval;
       
@@ -874,26 +789,24 @@
         });
         
         // Update indicators
-        indicators.forEach(indicator => {
-          indicator.style.opacity = '0.5';
+        indicators.forEach((indicator, i) => {
+          if (i === index) {
+            indicator.classList.add('active');
+            indicator.style.opacity = '1';
+          } else {
+            indicator.classList.remove('active');
+            indicator.style.opacity = '0.5';
+          }
         });
         
         // Show current slide
         slides[index].style.opacity = '1';
-        indicators[index].style.opacity = '1';
-        
         currentSlide = index;
       }
       
       // Function to show next slide
       function nextSlide() {
         let newIndex = (currentSlide + 1) % slides.length;
-        showSlide(newIndex);
-      }
-      
-      // Function to show previous slide
-      function prevSlide() {
-        let newIndex = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(newIndex);
       }
       
@@ -907,32 +820,22 @@
         clearInterval(slideInterval);
       }
       
-      // Event listeners for navigation buttons
-      nextBtn.addEventListener('click', () => {
+      // Event listener for clicking on the slideshow container
+      slideshowContainer.addEventListener('click', () => {
         nextSlide();
-        stopSlideshow();
-        startSlideshow(); // Restart the timer after manual navigation
-      });
-      
-      prevBtn.addEventListener('click', () => {
-        prevSlide();
         stopSlideshow();
         startSlideshow(); // Restart the timer after manual navigation
       });
       
       // Event listeners for indicators
       indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
+        indicator.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent triggering the container click
           showSlide(index);
           stopSlideshow();
           startSlideshow(); // Restart the timer after manual navigation
         });
       });
-      
-      // Pause slideshow on hover
-      const slideshowContainer = document.querySelector('.slides-container').parentElement;
-      slideshowContainer.addEventListener('mouseenter', stopSlideshow);
-      slideshowContainer.addEventListener('mouseleave', startSlideshow);
       
       // Start the slideshow
       startSlideshow();
