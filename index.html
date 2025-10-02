@@ -262,6 +262,28 @@
       object-fit: cover;
       display: block;
     }
+    
+    /* Product title animation - same as hardware-spec */
+    .product-title {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--animation-color), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .product-card:hover .product-title::after {
+      transform: translateX(100%);
+    }
   </style>
 </head>
 
@@ -400,7 +422,7 @@
         </div>
       </div>
       
-      <!-- Hero Image with Slideshow -->
+      <!-- Hero Image with Slideshow - Made larger -->
       <div class="relative" style="--delay: 2">
         <div
           class="w-full h-96 bg-white dark:bg-black border-black dark:border-white pixel-border flex items-center justify-center animate-float overflow-hidden p-0 glow-effect">
@@ -467,7 +489,7 @@
             <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             KESTREL
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -488,7 +510,7 @@
             <img src="assets/terralink-c3/terralink-c3_top.png" alt="Terralink Modem"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             TERRALINK
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -508,7 +530,7 @@
             <img src="assets/terrapower_duo/terrapower_duo_top.png" alt="Terrapower Duo"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             TERRAPOWER DUO
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -531,7 +553,7 @@
             <img src="assets/terrabeacon/terrabeacon_100_top.png" alt="Terra Beacon"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             TERRA BEACON
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -552,7 +574,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             RASPBERRY PI 4G HAT
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -573,7 +595,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             LINUX SHELL REFERENCE
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -594,7 +616,7 @@
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             HOURGLASS
           </h3>
           <p class="text-black dark:text-white mb-4">
