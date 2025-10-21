@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>cocopcb</title>
+  <title>cocopcb - Hardware Done Right</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    // Tailwind configuration with custom colors, fonts, and animations
     tailwind.config = {
       darkMode: "class",
       theme: {
@@ -39,6 +40,9 @@
             float: "float 6s ease-in-out infinite",
             "pulse-soft": "pulse-soft 4s ease-in-out infinite",
             "slide-in": "slide-in 0.6s ease-out",
+            "fade-in": "fade-in 1s ease-out",
+            "glow": "glow 2s ease-in-out infinite alternate",
+            "shimmer": "shimmer 2s infinite",
           },
           keyframes: {
             float: {
@@ -53,18 +57,42 @@
               "0%": { opacity: "0", transform: "translateY(30px)" },
               "100%": { opacity: "1", transform: "translateY(0)" },
             },
+            "fade-in": {
+              "0%": { opacity: "0" },
+              "100%": { opacity: "1" },
+            },
+            glow: {
+              "0%": { boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" },
+              "100%": { boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)" },
+            },
+            shimmer: {
+              "0%": { backgroundPosition: "-1000px 0" },
+              "100%": { backgroundPosition: "1000px 0" }
+            }
           },
         },
       },
     };
   </script>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+  
   <style>
+    /* Global CSS Variables for easy customization */
+    :root {
+      /* Animation color - Change this value to update all animations */
+      --animation-color: #14B8A6;  
+    }
+    
+    /* Custom CSS styles for pixel borders and animations */
     .pixel-border {
       image-rendering: pixelated;
       border: 2px solid currentColor;
     }
 
+    /* Hover lift effect for cards */
     .hover-lift {
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -73,24 +101,215 @@
       transform: translateY(-4px);
     }
 
+    /* Stagger animation delay calculation */
     .stagger-animation>* {
       animation-delay: calc(var(--delay) * 0.1s);
+    }
+    
+    /* Product card pop-up effect (replaces 3D effect) */
+    .product-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .dark .product-card:hover {
+      box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04);
+    }
+    
+    /* Glow effect for elements */
+    .glow-effect {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .glow-effect {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Hardware spec animation with underline effect - Using global variable */
+    .hardware-spec {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hardware-spec::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--animation-color), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .hardware-spec:hover::after {
+      transform: translateX(100%);
+    }
+    
+    /* Navigation link animation - Using global variable */
+    .nav-link {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--animation-color), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .nav-link:hover::after {
+      transform: translateX(100%);
+    }
+    
+    /* Loading screen transition */
+    .loading-screen {
+      transition: opacity 0.5s ease-out;
+    }
+    
+    /* Tech badge floating animation */
+    .tech-badge {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .tech-badge:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+    
+    .tech-badge:nth-child(3) {
+      animation-delay: 1s;
+    }
+    
+    .tech-badge:nth-child(4) {
+      animation-delay: 1.5s;
+    }
+    
+    /* Typewriter animation for text */
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typewriter 3s steps(40, end);
+    }
+    
+    /* Enhanced shimmer animation for buttons and links */
+    .shimmer-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .shimmer-effect::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.5),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s infinite;
+    }
+    
+    .dark .shimmer-effect::before {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 0, 0, 0.5),
+        transparent
+      );
+    }
+    
+    /* Rounded rectangle for slide indicators */
+    .slide-indicator {
+      border-radius: 9999px;
+      height: 6px;
+      transition: all 0.3s ease;
+    }
+    
+    .slide-indicator.active {
+      background-color: var(--animation-color);
+    }
+    
+    /* Remove gaps in slideshow */
+    .slideshow-container {
+      padding: 0;
+      margin: 0;
+    }
+    
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    /* Product title animation - same as hardware-spec */
+    .product-title {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--animation-color), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .product-card:hover .product-title::after {
+      transform: translateX(100%);
     }
   </style>
 </head>
 
 <body class="bg-white dark:bg-black text-black dark:text-white font-mono transition-colors duration-500">
-  <!-- Navigation -->
+  <!-- Loading Screen (commented out as requested) -->
+  <!--
+  <div id="loading-screen" class="loading-screen fixed inset-0 bg-white dark:bg-black z-50 flex items-center justify-center">
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white mx-auto mb-4"></div>
+      <p class="text-black dark:text-white font-mono">Loading Hardware...</p>
+    </div>
+  </div>
+  -->
+
+  <!-- Navigation Bar -->
   <nav
-    class="fixed top-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black dark:border-white z-50 transition-all duration-300">
+    class="fixed top-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black dark:border-white z-40 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo and Brand Name -->
       <div class="flex items-center space-x-3 cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 233 245"
           class="h-8 w-8 text-black dark:text-white">
           <defs id="defs1" />
           <g id="g1">
             <path
-              d="m 68.654988,238.17126 c -0.910244,-1.00581 -1.64406,-2.69331 -1.630703,-3.75 0.04097,-3.24127 27.691543,-100.53705 28.921414,-101.76757 0.834429,-0.83487 15.302151,-1.22267 52.353691,-1.40332 55.37242,-0.26997 55.90634,-0.22348 56.50719,4.92078 0.3549,3.03851 -26.27094,98.20974 -28.41849,101.57885 l -1.4342,2.25 h -52.32196 c -49.418667,0 -52.413788,-0.10147 -53.976942,-1.82874 z M 8,191 C 6.9,189.9 6,188.22987 6,187.2886 6,183.21704 20.445025,134.55497 22.163872,132.83613 23.85395,131.14605 26.12995,131 50.777494,131 c 29.992564,0 31.245608,0.25331 31.196712,6.3067 -0.03988,4.93681 -13.458861,51.46637 -15.490028,53.71078 C 64.778625,192.9021 63.339651,193 37.345012,193 11.333333,193 9.9024807,192.90248 8,191 Z m 21.654988,-77.82874 c -0.910244,-1.00581 -1.640057,-2.91831 -1.621807,-4.25 C 28.082274,105.33887 55.570946,9.029157 56.933419,7.6659693 57.783897,6.8150452 71.933193,6.4325496 109.29939,6.2503688 163.73333,5.9849733 165.14628,6.0959261 165.80812,10.687765 166.19047,13.340519 139.37775,109.65049 137.39396,112.75 L 135.95389,115 H 83.631935 c -49.418672,0 -52.413793,-0.10147 -53.976947,-1.82874 z M 152.75,113.9199 c -1.13866,-0.66321 -1.75,-2.24075 -1.75,-4.5158 0,-3.87627 13.56215,-52.171602 15.20735,-54.153945 C 166.99331,54.30313 174.19846,54 195.92244,54 225.93293,54 227,54.150966 227,58.39674 c 0,3.719303 -14.17365,53.09088 -15.74734,54.85326 -1.41807,1.5881 -4.11549,1.74719 -29.15765,1.71959 -16.87584,-0.0186 -28.27479,-0.42634 -29.34501,-1.04969 z" />
+              d="m 68.654988,238.17126 c -0.910244,-1.00581 -1.64406,-2.69331 -1.630703,-3.75 0.04097,-3.24127 27.691543,-100.53705 28.921414,-101.76757 0.834429,-0.83487 15.302151,-1.22267 52.353691,-1.40332 55.37242,-0.26997 55.90634,-0.22348 56.50719,4.92078 0.3549,3.03851 -26.27094,98.20974 -28.41849,101.57885 l -1.4342,2.25 h -52.32196 c -49.418667,0 -52.413788,-0.10147 -53.976942,-1.82874 z M 8,191 C 6.9,189.9 6,188.22987 6,187.2886 6,183.21704 20.445025,134.55497 22.163872,132.83613 23.85395,131.14605 26.12995,131 50.777494,131 c 29.992564,0 31.245608,0.25331 31.196712,6.3067 -0.03988,4.93681 -13.458861,51.46637 -15.490028,53.71078 C 64.778625,192.9021 63.339651,193 37.345012,193 11.333333,193 9.9024807,192.90248 8,191 z m 21.654988,-77.82874 c -0.910244,-1.00581 -1.640057,-2.91831 -1.621807,-4.25 C 28.082274,105.33887 55.570946,9.029157 56.933419,7.6659693 57.783897,6.8150452 71.933193,6.4325496 109.29939,6.2503688 163.73333,5.9849733 165.14628,6.0959261 165.80812,10.687765 166.19047,13.340519 139.37775,109.65049 137.39396,112.75 L 135.95389,115 H 83.631935 c -49.418672,0 -52.413793,-0.10147 -53.976947,-1.82874 z M 152.75,113.9199 c -1.13866,-0.66321 -1.75,-2.24075 -1.75,-4.5158 0,-3.87627 13.56215,-52.171602 15.20735,-54.153945 C 166.99331,54.30313 174.19846,54 195.92244,54 225.93293,54 227,54.150966 227,58.39674 c 0,3.719303 -14.17365,53.09088 -15.74734,54.85326 -1.41807,1.5881 -4.11549,1.74719 -29.15765,1.71959 -16.87584,-0.0186 -28.27479,-0.42634 -29.34501,-1.04969 z" />
           </g>
         </svg>
         <div
@@ -98,17 +317,20 @@
           cocopcb
         </div>
       </div>
+      
+      <!-- Desktop Navigation Links -->
       <div class="hidden md:flex space-x-8 items-center">
-        <a href="#products" class="hover:text-black dark:hover:text-white transition-colors relative group">
+        <a href="#products" class="hover:text-black dark:hover:text-white transition-colors relative group nav-link">
           products
           <span
             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="#contact" class="hover:text-black dark:hover:text-white transition-colors relative group">
+        <a href="#contact" class="hover:text-black dark:hover:text-white transition-colors relative group nav-link">
           contact
           <span
             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
+        <!-- Dark Mode Toggle Button -->
         <button id="dark-mode-toggle"
           class="ml-4 p-2 pixel-border bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white transition-all duration-300 hover-lift">
           <svg class="w-4 h-4 dark:hidden transition-transform duration-300" fill="none" stroke="currentColor"
@@ -124,6 +346,8 @@
           </svg>
         </button>
       </div>
+      
+      <!-- Mobile Navigation Menu -->
       <div class="md:hidden flex items-center">
         <button id="dark-mode-toggle-mobile"
           class="mr-4 p-2 pixel-border bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white transition-all duration-300 hover-lift">
@@ -145,6 +369,8 @@
         </button>
       </div>
     </div>
+    
+    <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black border-t border-black dark:border-white">
       <div class="px-4 py-2 space-y-2">
         <a href="#products" class="block py-2 hover:text-black dark:hover:text-white transition-colors">products</a>
@@ -154,8 +380,18 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="pt-24 min-h-screen flex items-center">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
+  <section class="pt-24 min-h-screen flex items-center relative overflow-hidden">
+    <!-- Background Tech Badges (floating elements) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="tech-badge absolute top-40 left-20 text-6xl opacity-40">⚡</div>
+      <div class="tech-badge absolute top-40 right-10 text-6xl opacity-40">🔧</div>
+      <div class="tech-badge absolute bottom-20 left-20 text-6xl opacity-40">📡</div>
+      <div class="tech-badge absolute bottom-20 right-10 text-6xl opacity-40">🔋</div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center relative z-10">
+      <!-- Hero Text Content -->
       <div class="animate-slide-in">
         <h1 class="text-4xl md:text-6xl font-bold text-black dark:text-white mb-6 leading-tight">
           Hardware Done Right
@@ -164,23 +400,61 @@
           Hardware made by people who actually use what they build. Real
           specs, sourceable parts, firmware you control.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a class="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift"
+        
+        <!-- Call to Action Buttons with Enhanced Shimmer Effect and Hardware Spec Animation -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <a class="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold hover:bg-black dark:hover:bg-white hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10 hardware-spec"
             href="#products">
-            VIEW PRODUCTS
+            <span class="relative z-10">VIEW PRODUCTS</span>
           </a>
-          <a class="border-2 border-black dark:border-white text-black dark:text-white px-6 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift"
+          <a class="border-2 border-black dark:border-white text-black dark:text-white px-6 py-3 font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-105 transition-all duration-300 hover-lift shimmer-effect relative overflow-hidden z-10 hardware-spec"
             href="#contact">
-            HARDWARE CONSULTING
+            <span class="relative z-10">HARDWARE CONSULTING</span>
           </a>
+        </div>
+        
+        <!-- Tech Stack with Hardware Spec Animation -->
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">Open Source</span>
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">Hackable</span>
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">ESP32</span>
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-sm rounded-full hardware-spec">18650</span>
         </div>
       </div>
+      
+      <!-- Hero Image with Slideshow - Made larger -->
       <div class="relative" style="--delay: 2">
         <div
-          class="w-full h-96 bg-white dark:bg-black border-black dark:border-white pixel-border flex items-center justify-center animate-float overflow-hidden p-2 md:p-4">
-          <img src="assets/kestrel/kestrel_side.png" alt="Kestrel Power Bank" class="w-full h-full object-cover" />
+          class="w-full h-96 bg-white dark:bg-black border-black dark:border-white pixel-border flex items-center justify-center animate-float overflow-hidden p-0 glow-effect">
+          <!-- Slideshow Container -->
+          <div class="relative w-full h-full overflow-hidden slideshow-container cursor-pointer" id="slideshow-container">
+            <!-- Slides -->
+            <div class="slides-container relative w-full h-full">
+              <div class="slide absolute w-full h-full opacity-100 transition-opacity duration-1000">
+                <img src="assets/kestrel/kestrel_side.png" alt="Kestrel Power Bank" class="slide-image" />
+              </div>
+              <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
+                <img src="assets/terrabeacon/terrabeacon_100_top.png" alt="terrabeacon top view" class="slide-image" />
+              </div>
+              <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
+                <img src="assets/terralink-c3/ec200u/terralink-c3_iso.png" alt="terralink c3 top view" class="slide-image" />
+              </div>
+              <div class="slide absolute w-full h-full opacity-0 transition-opacity duration-1000">
+                <img src="assets/terrapower_duo/terrapower_duo_iso.png" alt="Kestrel Power Bank Top" class="slide-image" />
+              </div>
+            </div>
+            
+            <!-- Slide Indicators (Rounded Rectangles) -->
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-100 transition-opacity active" data-slide="0"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-50 transition-opacity" data-slide="1"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-50 transition-opacity" data-slide="2"></button>
+              <button class="slide-indicator w-12 bg-black dark:bg-white opacity-50 transition-opacity" data-slide="3"></button>
+            </div>
+          </div>
         </div>
-        <!-- Floating elements with staggered animations -->
+        
+        <!-- Floating Elements with Staggered Animations -->
         <div class="absolute -top-4 -right-4 w-8 h-8 bg-black dark:bg-white rounded-full animate-float opacity-80"
           style="animation-delay: 1s"></div>
         <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-black dark:bg-white transform rotate-45 animate-float"
@@ -195,6 +469,7 @@
   <!-- Products Section -->
   <section id="products" class="py-20 bg-white dark:bg-black">
     <div class="max-w-6xl mx-auto px-4">
+      <!-- Section Header -->
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
           Products
@@ -204,16 +479,17 @@
         </p>
       </div>
 
+      <!-- Main Products Grid -->
       <div class="grid md:grid-cols-3 gap-8 stagger-animation">
         <!-- Kestrel Power Bank -->
         <a href="kestrel-power-bank.html"
-          class="block bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="block bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 1">
           <div class="mb-4 overflow-hidden rounded">
             <img src="assets/kestrel/kestrel_top.png" alt="Kestrel Power Bank"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             KESTREL
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -228,13 +504,13 @@
 
         <!-- Terralink Modem -->
         <a href="terralink-c3.html"
-          class="block bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="block bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 2">
           <div class="mb-4 overflow-hidden rounded">
-            <img src="assets/terralink-c3/terralink-c3_top.jpg" alt="Terralink Modem"
+            <img src="assets/terralink-c3/ec200u/terralink-c3_top.png" alt="Terralink Modem"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             TERRALINK
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -248,13 +524,13 @@
 
         <!-- Terrapower Duo -->
         <div
-          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 3">
           <div class="mb-4 overflow-hidden rounded">
             <img src="assets/terrapower_duo/terrapower_duo_top.png" alt="Terrapower Duo"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             TERRAPOWER DUO
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -271,13 +547,13 @@
       <div class="mt-8 grid md:grid-cols-4 gap-6 stagger-animation">
         <!-- Terra Beacon -->
         <div
-          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 4">
           <div class="mb-4 overflow-hidden rounded">
             <img src="assets/terrabeacon/terrabeacon_100_top.png" alt="Terra Beacon"
               class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             TERRA BEACON
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -291,14 +567,14 @@
 
         <!-- Raspberry Pi 4G Hat -->
         <div
-          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 5">
           <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
             <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             RASPBERRY PI 4G HAT
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -312,14 +588,14 @@
 
         <!-- Linux Shell Command Sheet -->
         <div
-          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 6">
           <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
             <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             LINUX SHELL REFERENCE
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -333,14 +609,14 @@
 
         <!-- Hourglass -->
         <div
-          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift"
+          class="bg-white dark:bg-black border-black dark:border-white pixel-border p-6 hover:border-black dark:hover:border-white transition-all duration-500 group hover-lift product-card"
           style="--delay: 7">
           <div class="mb-4 overflow-hidden rounded bg-gray-200 dark:bg-gray-800">
             <div class="w-full h-32 flex items-center justify-center text-6xl text-gray-400 dark:text-gray-600">
               📷
             </div>
           </div>
-          <h3 class="text-xl font-bold text-black dark:text-white mb-3">
+          <h3 class="text-xl font-bold text-black dark:text-white mb-3 product-title">
             HOURGLASS
           </h3>
           <p class="text-black dark:text-white mb-4">
@@ -363,6 +639,7 @@
       </h2>
 
       <div class="grid md:grid-cols-2 gap-8 mb-8 stagger-animation">
+        <!-- FOSS India 2025 Information -->
         <div class="hover-lift" style="--delay: 1">
           <h3 class="text-xl font-bold text-black dark:text-white mb-6">
             FOSS India 2025
@@ -379,22 +656,12 @@
           </div>
         </div>
 
+        <!-- Direct Contact Information -->
         <div class="hover-lift" style="--delay: 2">
           <h3 class="text-xl font-bold text-black dark:text-white mb-6">
             Direct Contact
           </h3>
           <div class="space-y-4">
-            <div class="hover:scale-105 transition-transform">
-
-            </div>
-            <!-- <div class="hover:scale-105 transition-transform">
-                <div class="font-bold text-black dark:text-white mb-2">
-                  Email
-                </div>
-                <div class="text-black dark:text-white font-bold">
-                  contact@cocopcb.com
-                </div>
-              </div> -->
             <div class="hover:scale-105 transition-transform">
               <div class="font-bold text-black dark:text-white mb-2">
                 Location
@@ -433,6 +700,18 @@
   </footer>
 
   <script>
+    // Loading screen functionality (commented out as requested)
+    /*
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('loading-screen').style.opacity = '0';
+        setTimeout(function() {
+          document.getElementById('loading-screen').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    */
+
     // Dark mode state with localStorage persistence
     let darkMode =
       localStorage.getItem("darkMode") === "true" ||
@@ -450,12 +729,12 @@
       }
     }
 
-    // Initialize dark mode
+    // Initialize dark mode based on user preference or system setting
     if (darkMode) {
       document.documentElement.classList.add("dark");
     }
 
-    // Mobile menu toggle
+    // Mobile menu toggle functionality
     document
       .getElementById("menu-toggle")
       .addEventListener("click", function () {
@@ -463,7 +742,7 @@
         mobileMenu.classList.toggle("hidden");
       });
 
-    // Dark mode toggle event listeners
+    // Dark mode toggle event listeners for both desktop and mobile
     document
       .getElementById("dark-mode-toggle")
       .addEventListener("click", toggleDarkMode);
@@ -546,6 +825,74 @@
           "dark:bg-opacity-95"
         );
       }
+    });
+
+    // Slideshow functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const slides = document.querySelectorAll('.slide');
+      const indicators = document.querySelectorAll('.slide-indicator');
+      const slideshowContainer = document.getElementById('slideshow-container');
+      let currentSlide = 0;
+      let slideInterval;
+      
+      // Function to show a specific slide
+      function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => {
+          slide.style.opacity = '0';
+        });
+        
+        // Update indicators
+        indicators.forEach((indicator, i) => {
+          if (i === index) {
+            indicator.classList.add('active');
+            indicator.style.opacity = '1';
+          } else {
+            indicator.classList.remove('active');
+            indicator.style.opacity = '0.5';
+          }
+        });
+        
+        // Show current slide
+        slides[index].style.opacity = '1';
+        currentSlide = index;
+      }
+      
+      // Function to show next slide
+      function nextSlide() {
+        let newIndex = (currentSlide + 1) % slides.length;
+        showSlide(newIndex);
+      }
+      
+      // Start automatic slideshow
+      function startSlideshow() {
+        slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+      }
+      
+      // Stop automatic slideshow
+      function stopSlideshow() {
+        clearInterval(slideInterval);
+      }
+      
+      // Event listener for clicking on the slideshow container
+      slideshowContainer.addEventListener('click', () => {
+        nextSlide();
+        stopSlideshow();
+        startSlideshow(); // Restart the timer after manual navigation
+      });
+      
+      // Event listeners for indicators
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent triggering the container click
+          showSlide(index);
+          stopSlideshow();
+          startSlideshow(); // Restart the timer after manual navigation
+        });
+      });
+      
+      // Start the slideshow
+      startSlideshow();
     });
   </script>
 </body>
